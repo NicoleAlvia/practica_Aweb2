@@ -88,4 +88,20 @@ function buscarElementoPorId(arreglo, id, callback)
   ];
   buscarElementoPorId(vehiculos, 2, mostrarElemento); // Buscar y mostrar el vehículo con ID 2  
 
+  //servicio REST de acceso libre aplicando Fetch con Promises y Async/await para su consumo.
+  async function fetchVehicleCharacters(query) {
+    const apiKey = "YOUR_API_KEY";
+    const timestamp = Date.now();
+    const hash = md5(`${timestamp}${apiKey}${privateKey}`);
+    const url = `https://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apiKey}&hash=${hash}&comics=${query}`;
   
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data.data.results);
+    } catch (error) {
+      console.error("Error fetching vehicle characters:", error);
+    }
+  }
+  
+  fetchVehicleCharacters("vehicles");  
